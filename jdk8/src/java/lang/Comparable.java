@@ -27,6 +27,8 @@ package java.lang;
 import java.util.*;
 
 /**
+ * link: https://www.cnblogs.com/lin-jing/p/8278271.html
+ *
  * 对实现此接口的对象会强制进行整体排序. compareTo方法称为自然排序方法, 使用
  * 此方法排序的方式称为自然排序.
  * This interface imposes a total ordering on the objects of each class that
@@ -35,7 +37,7 @@ import java.util.*;
  * its <i>natural comparison method</i>.<p>
  *
  * 实现此接口的对象集合(数组)可以使用Collections.sort()/Arrays.sort()进行自动排序.
- * 当实现了此接口的对象用作有序集合(SortedMap/SortedSet)中的键/元数时,不需要指定比较器.
+ * 当实现了此接口的对象用作有序集合(SortedMap/SortedSet)中的键/元素时,不需要指定比较器.
  * Lists (and arrays) of objects that implement this interface can be sorted
  * automatically by {@link Collections#sort(List) Collections.sort} (and
  * {@link Arrays#sort(Object[]) Arrays.sort}).  Objects that implement this
@@ -43,6 +45,9 @@ import java.util.*;
  * elements in a {@linkplain SortedSet sorted set}, without the need to
  * specify a {@linkplain Comparator comparator}.<p>
  *
+ * 对于类C(Collections)中的每一个元素来说, 当且仅当e1.compareTo(e2) == 0与e1.equals(e2)存在相同值时,
+ * 类C的自然排序才叫做与equals一致. null不是任何class的实例, 即使e.equals(null)返回false,
+ * e.compareTo(null)也会抛出NullPointerException
  * The natural ordering for a class <tt>C</tt> is said to be <i>consistent
  * with equals</i> if and only if <tt>e1.compareTo(e2) == 0</tt> has
  * the same boolean value as <tt>e1.equals(e2)</tt> for every
@@ -51,6 +56,7 @@ import java.util.*;
  * throw a <tt>NullPointerException</tt> even though <tt>e.equals(null)</tt>
  * returns <tt>false</tt>.<p>
  *
+ * 强烈推荐自然排序与equals一致(虽然不是必须的). 这是因为排序的set/map没有
  * It is strongly recommended (though not required) that natural orderings be
  * consistent with equals.  This is so because sorted sets (and sorted maps)
  * without explicit comparators behave "strangely" when they are used with
