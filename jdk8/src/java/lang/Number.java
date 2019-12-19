@@ -26,15 +26,18 @@
 package java.lang;
 
 /**
+ * 抽象类Number是原始类型 byte、double、float、int、long、short的超类。
  * The abstract class {@code Number} is the superclass of platform
  * classes representing numeric values that are convertible to the
  * primitive types {@code byte}, {@code double}, {@code float}, {@code
  * int}, {@code long}, and {@code short}.
  *
+ *将指定的 Number 数值类型转换为基本类型,是由 Number 定义实现的.
  * The specific semantics of the conversion from the numeric value of
  * a particular {@code Number} implementation to a given primitive
  * type is defined by the {@code Number} implementation in question.
  *
+ * 在Java规范中的两种类型转换时, 经常会出现将精度缩小/扩大,从而造成数据丢失, 得到的结果可能会与输入时不一致.
  * For platform classes, the conversion is often analogous to a
  * narrowing primitive conversion or a widening primitive conversion
  * as defining in <cite>The Java&trade; Language Specification</cite>

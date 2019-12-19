@@ -51,18 +51,21 @@ import java.lang.annotation.Native;
  */
 public final class Integer extends Number implements Comparable<Integer> {
     /**
+     * 定义 int 可取的最小值： -2^31.
      * A constant holding the minimum value an {@code int} can
      * have, -2<sup>31</sup>.
      */
     @Native public static final int   MIN_VALUE = 0x80000000;
 
     /**
+     * 定义 int 可取的最大值：2^31 - 1
      * A constant holding the maximum value an {@code int} can
      * have, 2<sup>31</sup>-1.
      */
     @Native public static final int   MAX_VALUE = 0x7fffffff;
 
     /**
+     * 表示基本类型int的类实例
      * The {@code Class} instance representing the primitive type
      * {@code int}.
      *
@@ -72,6 +75,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     public static final Class<Integer>  TYPE = (Class<Integer>) Class.getPrimitiveClass("int");
 
     /**
+     * 将数字表示为字符串时,所有可能的字符
      * All possible chars for representing a number as a String
      */
     final static char[] digits = {

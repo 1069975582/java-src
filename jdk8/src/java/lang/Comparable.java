@@ -105,23 +105,28 @@ import java.util.*;
  */
 public interface Comparable<T> {
     /**
-     * Compares this object with the specified object for order.  Returns a
-     * negative integer, zero, or a positive integer as this object is less
-     * than, equal to, or greater than the specified object.
      *
+     * 为指定的对象排序时,返回一个负数、0或者一个正数,表示此对象小于、等于或者大于另外一个.
+     *
+     * 实现类需要确保 sgn(x.compareTo(y)) == -sgn(y.compareTo(x))(这意味着x.compareTo(y)抛出一个异常, y.compareTo(x)
+     * 也需要抛出一个异常)
      * <p>The implementor must ensure <tt>sgn(x.compareTo(y)) ==
      * -sgn(y.compareTo(x))</tt> for all <tt>x</tt> and <tt>y</tt>.  (This
      * implies that <tt>x.compareTo(y)</tt> must throw an exception iff
      * <tt>y.compareTo(x)</tt> throws an exception.)
      *
+     * 实现类还需要确保关系是可传递的: x.compareTo(y)>0, y.compareTo(z)>0, 那么x.compareTo(z)>0
      * <p>The implementor must also ensure that the relation is transitive:
      * <tt>(x.compareTo(y)&gt;0 &amp;&amp; y.compareTo(z)&gt;0)</tt> implies
      * <tt>x.compareTo(z)&gt;0</tt>.
      *
+     * 最后,实现者需要确保 x.compareTo(y)==0,对所有的z来说,都有sgn(x.compareTo(z)) == sgn(y.compareTo(z))
      * <p>Finally, the implementor must ensure that <tt>x.compareTo(y)==0</tt>
      * implies that <tt>sgn(x.compareTo(z)) == sgn(y.compareTo(z))</tt>, for
      * all <tt>z</tt>.
      *
+     * 强烈建议(但不是必须的)(x.compareTo(y) == 0) == (x.equals(y)),正常来说,任何实现Comparable接口但是违反此条件的
+     * 类,都需要清楚的指出.推荐如下描述: "注意：此类具有与 equals 不一致的自然排序。"
      * <p>It is strongly recommended, but <i>not</i> strictly required that
      * <tt>(x.compareTo(y)==0) == (x.equals(y))</tt>.  Generally speaking, any
      * class that implements the <tt>Comparable</tt> interface and violates
@@ -129,19 +134,22 @@ public interface Comparable<T> {
      * language is "Note: this class has a natural ordering that is
      * inconsistent with equals."
      *
+     * 在前面的描述中，符号 sgn(expression) 指定 signum 数学函数，该函数根据 expression 的值是负数、零还是正数，
+     * 分别返回 -1、0 或 1 中的一个值。
      * <p>In the foregoing description, the notation
      * <tt>sgn(</tt><i>expression</i><tt>)</tt> designates the mathematical
      * <i>signum</i> function, which is defined to return one of <tt>-1</tt>,
      * <tt>0</tt>, or <tt>1</tt> according to whether the value of
      * <i>expression</i> is negative, zero or positive.
      *
-     * @param   o the object to be compared.
+     * @param   o the object to be compared. 被比较的对象
      * @return  a negative integer, zero, or a positive integer as this object
      *          is less than, equal to, or greater than the specified object.
      *
      * @throws NullPointerException if the specified object is null
      * @throws ClassCastException if the specified object's type prevents it
      *         from being compared to this object.
+     *         抛出异常:ClassCastException - 如果指定对象的类型不允许它与此对象进行比较。
      */
     public int compareTo(T o);
 }

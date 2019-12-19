@@ -27,6 +27,7 @@ package java.lang.annotation;
 
 
 /**
+ * 表明一个字段引用的值可能来自于本地代码
  * Indicates that a field defining a constant value may be referenced
  * from native code.
  *
