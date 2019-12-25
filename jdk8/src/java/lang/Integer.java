@@ -75,7 +75,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     public static final Class<Integer>  TYPE = (Class<Integer>) Class.getPrimitiveClass("int");
 
     /**
-     * 将数字表示为字符串时,所有可能的字符
+     * 将数字表示为字符串时,所有可能的字符,用于进制转化
      * All possible chars for representing a number as a String
      */
     final static char[] digits = {
@@ -88,6 +88,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     };
 
     /**
+     * 将10进制的数转换为其他进制
      * Returns a string representation of the first argument in the
      * radix specified by the second argument.
      *

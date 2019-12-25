@@ -28,11 +28,16 @@ package java.util;
 import java.util.function.UnaryOperator;
 
 /**
+ * 一个有序集合(也被称为序列).这个接口的使用者可以精确的控制每个元素在插入列表时的顺序.
+ * 使用者可以使用下标搜索列表中的元素.
  * An ordered collection (also known as a <i>sequence</i>).  The user of this
  * interface has precise control over where in the list each element is
  * inserted.  The user can access elements by their integer index (position in
  * the list), and search for elements in the list.<p>
  *
+ * 与sets不同, lists中允许存在相同的元素.lists通常允许元素对,例如e1.equals(e2),也允许多个null存在，
+ * 这并非不可想象,也许有人希望实现一个禁止重复的列表,当用户插入null时抛出运行时异常,
+ * 但我们希望这种用法很少见.
  * Unlike sets, lists typically allow duplicate elements.  More formally,
  * lists typically allow pairs of elements <tt>e1</tt> and <tt>e2</tt>
  * such that <tt>e1.equals(e2)</tt>, and they typically allow multiple
@@ -41,12 +46,17 @@ import java.util.function.UnaryOperator;
  * throwing runtime exceptions when the user attempts to insert them, but we
  * expect this usage to be rare.<p>
  *
+ *  除了在Collection接口中定义的函数外, List接口中还添加了其他规则, 将接口中的方法
+ *  写在这里是为了方便.
  * The <tt>List</tt> interface places additional stipulations, beyond those
  * specified in the <tt>Collection</tt> interface, on the contracts of the
  * <tt>iterator</tt>, <tt>add</tt>, <tt>remove</tt>, <tt>equals</tt>, and
  * <tt>hashCode</tt> methods.  Declarations for other inherited methods are
  * also included here for convenience.<p>
  *
+ * List接口为定位元素(索引)提供了4种方法。Lists(例如Arrays数组)是基于0的.这些操作可能
+ * 会在与索引值成比例的时间内执行(例如LinkedList).因此，在调用者不知道实现的情况下，
+ * 迭代列表中的元素通常比通过列表建立索引更可取。
  * The <tt>List</tt> interface provides four methods for positional (indexed)
  * access to list elements.  Lists (like Java arrays) are zero based.  Note
  * that these operations may execute in time proportional to the index value
@@ -55,24 +65,36 @@ import java.util.function.UnaryOperator;
  * preferable to indexing through it if the caller does not know the
  * implementation.<p>
  *
+ * List提供了一个特殊的迭代器, 被称为 ListIterator,允许元素被insert或者替换,
+ * 相比Iterator,提供双向访问功能. 提供了一个方法,可以从指定的位置开始迭代.
  * The <tt>List</tt> interface provides a special iterator, called a
  * <tt>ListIterator</tt>, that allows element insertion and replacement, and
  * bidirectional access in addition to the normal operations that the
  * <tt>Iterator</tt> interface provides.  A method is provided to obtain a
  * list iterator that starts at a specified position in the list.<p>
  *
+ * 对于指定的元素搜索, List接口提供了两种方法.从性能的角度看, 应该 慎用这些
+ * 方法,在许多实现中,将执行代价高昂的线性搜索.
  * The <tt>List</tt> interface provides two methods to search for a specified
  * object.  From a performance standpoint, these methods should be used with
  * caution.  In many implementations they will perform costly linear
  * searches.<p>
  *
+ * List接口提供了两种方法进行元素的插入或删除.
  * The <tt>List</tt> interface provides two methods to efficiently insert and
  * remove multiple elements at an arbitrary point in the list.<p>
  *
+ * 注意:虽然允许列表将自身包含为元素，但还是要特别注意:<tt> = </tt>和
+ * <tt>hashCode</tt>方法在这样的列表中不再定义得很好。
  * Note: While it is permissible for lists to contain themselves as elements,
  * extreme caution is advised: the <tt>equals</tt> and <tt>hashCode</tt>
  * methods are no longer well defined on such a list.
  *
+ * 一些列表实现可能对其中的元素有限制.例如,有些实现禁止元素为null,有些对元素类型有限制.
+ * 当试图添加不符合条件的元素时,会抛出未检查的异常, 通常为NullPointerException或ClassCastException,
+ * 当试图查询不符合要求的元素时,可能会抛出异常,或者返回false。更一般的说,尝试对不符合条件的元素执行操作,
+ * 但是该操作的完成不会导致将不符合条件的元素插入集合中,这可能会引发异常,也可能会成功.此类异常在此接口
+ * 的规范中标记为 可选.
  * <p>Some list implementations have restrictions on the elements that
  * they may contain.  For example, some implementations prohibit null elements,
  * and some have restrictions on the types of their elements.  Attempting to
@@ -112,6 +134,7 @@ public interface List<E> extends Collection<E> {
     // Query Operations
 
     /**
+     * 返回集合中元素的大小, 如果超过的Integer.MAX_VALUE, 返回Integer.MAX_VALUE
      * Returns the number of elements in this list.  If this list contains
      * more than <tt>Integer.MAX_VALUE</tt> elements, returns
      * <tt>Integer.MAX_VALUE</tt>.
@@ -145,6 +168,7 @@ public interface List<E> extends Collection<E> {
     boolean contains(Object o);
 
     /**
+     * 按适当的顺序对列表中的元素返回一个迭代器。
      * Returns an iterator over the elements in this list in proper sequence.
      *
      * @return an iterator over the elements in this list in proper sequence
@@ -152,6 +176,9 @@ public interface List<E> extends Collection<E> {
     Iterator<E> iterator();
 
     /**
+     * 返回包含集合中所有元素的数组.返回的数组是“安全”的,因为没有数组中的元素
+     * 没有任何引用.（换句话说,这个方法会申请一个新的数组,即使这个列表由一个数组支持）.
+     * 因此,调用者可以任意修改返回的数组.
      * Returns an array containing all of the elements in this list in proper
      * sequence (from first to last element).
      *
@@ -170,6 +197,9 @@ public interface List<E> extends Collection<E> {
     Object[] toArray();
 
     /**
+     * 返回包含当前集合所有元素的数组,返回的数组类型为指定的运行时类型.
+     * 如果指定的数组size不小于当前集合大小,返回传入的数组,如果小于list的
+     * size,返回一个新数组.
      * Returns an array containing all of the elements in this list in
      * proper sequence (from first to last element); the runtime type of
      * the returned array is that of the specified array.  If the list fits
@@ -177,6 +207,7 @@ public interface List<E> extends Collection<E> {
      * array is allocated with the runtime type of the specified array and
      * the size of this list.
      *
+     * 如果传入的数组存在多余的空间,后面的数据将被设置为null.
      * <p>If the list fits in the specified array with room to spare (i.e.,
      * the array has more elements than the list), the element in the array
      * immediately following the end of the list is set to <tt>null</tt>.
@@ -672,13 +703,7 @@ public interface List<E> extends Collection<E> {
     // View
 
     /**
-     * Returns a view of the portion of this list between the specified
-     * <tt>fromIndex</tt>, inclusive, and <tt>toIndex</tt>, exclusive.  (If
-     * <tt>fromIndex</tt> and <tt>toIndex</tt> are equal, the returned list is
-     * empty.)  The returned list is backed by this list, so non-structural
-     * changes in the returned list are reflected in this list, and vice-versa.
-     * The returned list supports all of the optional list operations supported
-     * by this list.<p>
+
      *
      * This method eliminates the need for explicit range operations (of
      * the sort that commonly exist for arrays).  Any operation that expects

@@ -30,6 +30,7 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
 /**
+ * 根据List接口实现的可调整大小的数组.
  * Resizable-array implementation of the <tt>List</tt> interface.  Implements
  * all optional list operations, and permits all elements, including
  * <tt>null</tt>.  In addition to implementing the <tt>List</tt> interface,
@@ -200,6 +201,8 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 对ArrayList实例进行扩容.如果需要，增加这个<tt>ArrayList</tt>实例的容量，
+     * 以确保它至少可以容纳由最小容量参数指定的元素数量。
      * Increases the capacity of this <tt>ArrayList</tt> instance, if
      * necessary, to ensure that it can hold at least the number of elements
      * specified by the minimum capacity argument.
@@ -223,7 +226,7 @@ public class ArrayList<E> extends AbstractList<E>
         if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
             minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
         }
-
+        // 显示扩容
         ensureExplicitCapacity(minCapacity);
     }
 
@@ -236,6 +239,8 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 集合能够扩容的最大容量.一个VM会在list头部添加一些描述信息,
+     * 尝试扩容可能会发生OOM.
      * The maximum size of array to allocate.
      * Some VMs reserve some header words in an array.
      * Attempts to allocate larger arrays may result in
@@ -244,6 +249,7 @@ public class ArrayList<E> extends AbstractList<E>
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
     /**
+     * 扩容, 容量增加以前的1.5倍.
      * Increases the capacity to ensure that it can hold at least the
      * number of elements specified by the minimum capacity argument.
      *
@@ -288,6 +294,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 判断集合中是否包含指定元素.
      * Returns <tt>true</tt> if this list contains the specified element.
      * More formally, returns <tt>true</tt> if and only if this list contains
      * at least one element <tt>e</tt> such that
@@ -301,6 +308,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 返回此列表中指定元素的第一个匹配项的索引, 如果没有匹配的值, 返回-1,否则返回索引值.
      * Returns the index of the first occurrence of the specified element
      * in this list, or -1 if this list does not contain the element.
      * More formally, returns the lowest index <tt>i</tt> such that
@@ -321,6 +329,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 返回此列表中指定元素的最后一个匹配项的索引,如果没有匹配到, 返回-1
      * Returns the index of the last occurrence of the specified element
      * in this list, or -1 if this list does not contain the element.
      * More formally, returns the highest index <tt>i</tt> such that
@@ -341,6 +350,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 返回此集合的浅复制实例.
      * Returns a shallow copy of this <tt>ArrayList</tt> instance.  (The
      * elements themselves are not copied.)
      *
@@ -359,6 +369,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 返回包含当前集合元素的数组.浅复制
      * Returns an array containing all of the elements in this list
      * in proper sequence (from first to last element).
      *
@@ -377,6 +388,7 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     /**
+     * 返回指定数组类型的数组.如果传入的数组大小小于集合size, 重新创建一个数组.
      * Returns an array containing all of the elements in this list in proper
      * sequence (from first to last element); the runtime type of the returned
      * array is that of the specified array.  If the list fits in the
