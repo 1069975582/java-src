@@ -1957,7 +1957,7 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                 else
                     tl.next = p;
                 tl = p;
-            }
+            }ConcurrentHashMap
             return hd;
         }
 
